@@ -14,14 +14,15 @@
                                     //i.e. LED #0 is connected to pin 2, LED #1, 3 and so on
                                     //to address an array use ledPins[0] this would equal 2
                                     //and ledPins[7] would equal 9
-  
+ int speakerPin = 10;
  /*
   * setup() - this function runs once when you turn your Arduino on
   * We the three control pins to outputs
   */
  void setup()
  {
-   
+     pinMode(speakerPin, OUTPUT);
+
    //Set each pin connected to an LED to output mode (pulling high (on) or low (off)
    for(int i = 0; i < 8; i++){         //this is a loop and will repeat eight times
        pinMode(ledPins[i],OUTPUT); //we use this to set each LED pin to output
@@ -71,7 +72,11 @@
    int delayTime = 100; //the time (in milliseconds) to pause between LEDs
                         //make smaller for quicker switching and larger for slower
    digitalWrite(ledPins[0], HIGH);  //Turns on LED #0 (connected to pin 2 )
-   delay(delayTime);                //waits delayTime milliseconds
+   delay(delayTime);
+digitalWrite(speakerPin, HIGH);
+    delayMicroseconds(1000);
+    digitalWrite(speakerPin, LOW);
+    delayMicroseconds(1000);   //waits delayTime milliseconds
    digitalWrite(ledPins[1], HIGH);  //Turns on LED #1 (connected to pin 3 )
    delay(delayTime);                //waits delayTime milliseconds
    digitalWrite(ledPins[2], HIGH);  //Turns on LED #2 (connected to pin 4 )
@@ -101,6 +106,10 @@
    digitalWrite(ledPins[2], LOW);  //Turns on LED #5 (connected to pin 7 )
    delay(delayTime);                //waits delayTime milliseconds
    digitalWrite(ledPins[1], LOW);  //Turns on LED #6 (connected to pin 8 )
+   digitalWrite(speakerPin, HIGH);
+    delayMicroseconds(500);
+    digitalWrite(speakerPin, LOW);
+    delayMicroseconds(500);   //waits delayTime milliseconds
    delay(delayTime);                //waits delayTime milliseconds
    digitalWrite(ledPins[0], LOW);  //Turns on LED #7 (connected to pin 9 )
    delay(delayTime);                //waits delayTime milliseconds  
@@ -113,6 +122,18 @@
   * this does it using a loop which makes for a lot less typing. 
   * than oneOnAtATimeNoLoop() does exactly the same thing with less typing
   */
+  
+void playTone(int tone, int duration) {
+  for (long i = 0; i < duration * 1000L; i += tone * 2) {
+    digitalWrite(speakerPin, HIGH);
+    delayMicroseconds(tone);
+    digitalWrite(speakerPin, LOW);
+    delayMicroseconds(tone);
+    
+  }
+  delay(delayTime);  
+}
+
  void oneAfterAnotherLoop(){
    int delayTime = 50; //the time (in milliseconds) to pause between LEDs
                         //make smaller for quicker switching and larger for slower
@@ -120,7 +141,12 @@
  //Turn Each LED on one after another
    for(int i = 0; i <= 7; i++){
      digitalWrite(ledPins[i], HIGH);  //Turns on LED #i each time this runs i
-     delay(delayTime);                //gets one added to it so this will repeat 
+     //digitalWrite(speakerPin, HIGH);
+          int tone = 200 * i;
+
+     playTone(tone, 1);
+    //delayMicroseconds(tone);
+                   //gets one added to it so this will repeat 
    }                                  //8 times the first time i will = 0 the final
                                       //time i will equal 7;
   
