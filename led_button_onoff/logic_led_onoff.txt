@@ -1,0 +1,33 @@
+last = low
+cur = low 
+ledOn = false
+
+press 1:
+last = low
+current = high
+ledOn = true
+last = high
+
+no press
+last = high
+current = low
+ledOn = true
+last = low
+
+no press
+last = low
+current = low
+ledOn = true
+last = low
+
+press 2:
+last = low
+current = high
+ledOn = false
+last = high
+
+no press
+last = high
+current = low
+ledOn = false
+last = low
